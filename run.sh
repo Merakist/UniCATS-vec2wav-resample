@@ -4,7 +4,7 @@
 #  MIT License (https://opensource.org/licenses/MIT)
 
 . ./cmd.sh || exit 1;
-# . ./path.sh || exit 1;
+. ./path.sh || exit 1;
 
 # basic settings
 stage=-1              # stage to start
@@ -46,7 +46,7 @@ dev_set="dev_${part}"           # name of development data directory
 eval_set="eval_${part}"
 
 # shellcheck disable=SC1091
-. parse_options.sh || exit 1;
+. ./utils/parse_options.sh || exit 1;
 
 set -eo pipefail
 chmod +x ctx_vec2wav/bin/train.py ctx_vec2wav/bin/decode.py
@@ -109,7 +109,7 @@ if [ "${stage}" -le 3 ] && [ "${stop_stage}" -ge 3 ]; then
             mkdir -p "${featdir}/vqidx/${name}"
             cat ${featdir}/vqidx/{dev_all,eval_all}/feats.scp | filter_scp.pl ${datadir}/${name}/wav.scp - | uniq > ${featdir}/vqidx/${name}/feats.scp
         fi
-        feat-to-len.py scp:${featdir}/normed_fbank/${name}/feats.scp > ${datadir}/${name}/utt2num_frames
+        ./utils/feat-to-len.py scp:${featdir}/normed_fbank/${name}/feats.scp > ${datadir}/${name}/utt2num_frames
         echo "$(wc -l ${featdir}/normed_fbank/${name}/feats.scp) utterances for decoding"
 
         python local/build_prompt_feat.py ${datadir}/${name}/utt2num_frames ${datadir}/${name}/utt2spk ${featdir}/normed_fbank/${name}/feats.scp 300 > ${datadir}/${name}/prompt.scp

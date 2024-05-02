@@ -9,6 +9,7 @@ import logging
 
 import kaldiio
 import numpy
+import librosa
 
 from espnet_transform.spectrogram import logmelspectrogram
 from espnet_utils.cli_utils import get_commandline_args
@@ -83,7 +84,10 @@ def main():
                                compression_method=args.compression_method
                                ) as writer:
         for utt_id, (rate, array) in reader:
-            assert rate == args.fs
+            if rate != args.fs:
+                array = librosa.resample(array.astype(numpy.float32), orig_sr=rate, target_sr=args.fs)
+                rate = args.fs
+            # assert rate == args.fs
             array = array.astype(numpy.float32)
             if args.normalize is not None and args.normalize != 1:
                 array = array / (1 << (args.normalize - 1))

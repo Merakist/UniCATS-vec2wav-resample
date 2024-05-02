@@ -1,6 +1,9 @@
-# CTX-vec2wav, the Acoustic Context-Aware Vocoder
+# A CTX-vec2wav Fork with On-the-fly Resampling
+## WARNING - This fork has unofficial modifications
 
-> This is the official implementation of **CTX-vec2wav** vocoder in the AAAI-2024 paper [UniCATS: A Unified Context-Aware Text-to-Speech Framework with Contextual VQ-Diffusion and Vocoding](https://arxiv.org/abs/2306.07547).
+This fork introduces on-the-fly resampling to the pipeline, to realize the training of UniCATS vec2wav module with audio files of non-native sampling rate demanded by the pipeline (16K).
+
+> For the official implementation of **CTX-vec2wav** vocoder in the AAAI-2024 paper [UniCATS: A Unified Context-Aware Text-to-Speech Framework with Contextual VQ-Diffusion and Vocoding](https://arxiv.org/abs/2306.07547), refer to the official repository - [The official implementation of CTX-vec2wav](https://github.com/X-LANCE/UniCATS-CTX-vec2wav)
 
 <img width="1187" alt="image-20230926140022539" src=asset/main.png>
 

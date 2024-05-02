@@ -7,7 +7,7 @@ nltk==3.8.1
 setuptools==65.6.3
 six==1.16.0
 soundfile~=0.10.3.post1
-torch~=1.12.1
+torch~=2.0.1
 tqdm~=4.62.3
 resemblyzer
 pathlib~=1.0.1

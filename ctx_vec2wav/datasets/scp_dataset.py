@@ -11,6 +11,8 @@ import random
 from multiprocessing import Manager
 
 import kaldiio
+# import librosa
+import resampy
 import numpy as np
 
 from torch.utils.data import Dataset
@@ -55,6 +57,7 @@ class AudioMelSCPDataset(Dataset):
         vqidx_scp,
         mel_scp,
         aux_scp,
+        sampling_rate,
         utt2num_frames=None,
         segments=None,
         batch_frames=None,
@@ -90,6 +93,7 @@ class AudioMelSCPDataset(Dataset):
         self.return_utt_id = return_utt_id
         self.return_sampling_rate = return_sampling_rate
         self.allow_cache = allow_cache
+        self.sampling_rate = sampling_rate
 
         utt2num_frames_loader = None
         if utt2num_frames is not None:
@@ -171,6 +175,9 @@ class AudioMelSCPDataset(Dataset):
                 mel = self.mel_loader[utt_id]
                 vqidx = self.vqidx_loader[utt_id]
                 aux = self.aux_loader[utt_id]
+                
+                if fs != self.sampling_rate:
+                    audio = resampy.resample(audio, fs, self.sampling_rate)
 
                 min_len = min(len(mel), len(vqidx), len(aux))
                 assert (((abs(len(mel) - min_len) <= self.length_tolerance) and

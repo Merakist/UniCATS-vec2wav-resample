@@ -903,6 +903,8 @@ def main(rank, n_gpus):
         batch_size=config.get("batch_size", None),
         min_num_frames=config.get("min_num_frames", None),
         max_num_frames=config.get("max_num_frames", None),
+        return_sampling_rate=False,
+        sampling_rate=config.get("sampling_rate", None),
         allow_cache=config.get("allow_cache", False),  # keep compatibility
         length_tolerance=config.get("length_tolerance", 2)
     )
@@ -917,6 +919,8 @@ def main(rank, n_gpus):
         segments=args.dev_segments,
         min_num_frames=config.get("min_num_frames", None),
         max_num_frames=config.get("max_num_frames", None),
+        return_sampling_rate=False,
+        sampling_rate=config.get("sampling_rate", None),
         allow_cache=config.get("allow_cache", False),  # keep compatibility
         length_tolerance=config.get("length_tolerance", 2)
     )
